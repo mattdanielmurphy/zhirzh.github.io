@@ -1,4 +1,31 @@
-<!DOCTYPE html><html lang="en-US"><head><meta charSet="UTF-8"/><link rel="stylesheet" href="/index.css"/><title>Write a stream ripper with MediaRecorder</title></head><body><div class="fonts-loader"><div>0</div><div style="font-style:italic">1</div><div style="font-weight:bold">2</div><div style="font-weight:bold;font-style:italic">3</div></div><header class="main-nav"><nav><ul class="nav-list"><li><h1><a href="/">Blog</a></h1></li><li><a href="/archive">Archive</a></li><li><a href="/about">About</a></li></ul></nav></header><h1 id="write-a-stream-ripper-with-mediarecorder" class="post-heading"><a href="#write-a-stream-ripper-with-mediarecorder">Write a stream ripper with MediaRecorder</a></h1><aside class="contents">Contents<nav><ul><li><a href="#write-a-stream-ripper-with-mediarecorder" class="current-section">Write a stream ripper with MediaRecorder</a><ul><li><a href="#mediastream">
+<!DOCTYPE html><html lang="en-US"><head><meta charSet="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1"/><title>Write a stream ripper with MediaRecorder</title><link rel="stylesheet" href="/index.css"/></head><body><div class="fonts-loader"><div>0</div><div style="font-style:italic">1</div><div style="font-weight:bold">2</div><div style="font-weight:bold;font-style:italic">3</div></div><header class="main-nav"><nav><ul class="nav-list"><li><h1><a href="/">Blog</a></h1></li><li><a href="/archive">Archive</a></li><li><a href="/about">About</a></li></ul></nav><button class="lamp"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="35" fill="none" stroke-width="10"></circle><path d="M 50 70 A 20 20 0 0 1 50 30"></path><path d="M 50 70 A 20 20 0 0 0 50 30"></path></svg></button><script>
+document.querySelector('.lamp').addEventListener('click', toggleColorScheme)
+
+const darkModeMediaQuery = matchMedia('(prefers-color-scheme: dark)')
+darkModeMediaQuery.addListener(toggleColorScheme)
+
+const documentClasses = document.documentElement.classList
+documentClasses.add(getColorScheme())
+
+function getColorScheme() {
+   const savedColorScheme = localStorage.getItem('color-scheme')
+
+   if (savedColorScheme) {
+      return savedColorScheme === 'dark' ? 'dark' : 'light'
+   }
+
+   return darkModeMediaQuery.matches ? 'dark' : 'light'
+}
+
+function toggleColorScheme() {
+   const colorScheme = getColorScheme()
+   documentClasses.remove(colorScheme)
+
+   const nextColorScheme = colorScheme === 'dark' ? 'light' : 'dark'
+   documentClasses.add(nextColorScheme)
+   localStorage.setItem('color-scheme', nextColorScheme)
+}
+</script></header><h1 id="write-a-stream-ripper-with-mediarecorder" class="post-heading"><a href="#write-a-stream-ripper-with-mediarecorder">Write a stream ripper with MediaRecorder</a></h1><aside class="contents">Contents<nav><ul><li><a href="#write-a-stream-ripper-with-mediarecorder" class="current-section">Write a stream ripper with MediaRecorder</a><ul><li><a href="#mediastream">
          MediaStream
       </a><ul><li><a href="#media-devices">
          Media Devices
@@ -24,7 +51,7 @@
          2. Adaptive Streaming
       </a></li></ul></li><li><a href="#the-end-3">
          The end
-      </a></li></ul></li></ul></nav><script>
+      </a></li></ul></li></ul></nav></aside><script>
 const topThreshold = 20
 
 const initialTop = 270 // refer index.css for .contents top offset
@@ -92,7 +119,7 @@ function resetSidebar() {
       $currentSection.classList.remove('current-section')
    })
 }
-</script></aside><article><p>The new <a href="https://developer.mozilla.org/docs/Web/API/MediaRecorder"><code>MediaRecorder</code></a> WebAPI makes media recording super easy.
+</script><article><p>The new <a href="https://developer.mozilla.org/docs/Web/API/MediaRecorder"><code>MediaRecorder</code></a> WebAPI makes media recording super easy.
 It allows storing chunks of data from a <a href="https://developer.mozilla.org/docs/Web/API/MediaStream">media stream</a> as blobs, which can later be concatenated and saved as a single file.
 As time passes, more sources of media streams are added.
 We can capture media from:</p>

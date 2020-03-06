@@ -1,10 +1,37 @@
-<!DOCTYPE html><html lang="en-US"><head><meta charSet="UTF-8"/><link rel="stylesheet" href="/index.css"/><title>Animating Dots &amp; Dashes</title></head><body><div class="fonts-loader"><div>0</div><div style="font-style:italic">1</div><div style="font-weight:bold">2</div><div style="font-weight:bold;font-style:italic">3</div></div><header class="main-nav"><nav><ul class="nav-list"><li><h1><a href="/">Blog</a></h1></li><li><a href="/archive">Archive</a></li><li><a href="/about">About</a></li></ul></nav></header><h1 id="animating-dots--dashes" class="post-heading"><a href="#animating-dots--dashes">Animating Dots &amp; Dashes</a></h1><aside class="contents">Contents<nav><ul><li><a href="#animating-dots--dashes" class="current-section">Animating Dots &amp; Dashes</a><ul><li><a href="#static-borders">
+<!DOCTYPE html><html lang="en-US"><head><meta charSet="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1"/><title>Animating Dots &amp; Dashes</title><link rel="stylesheet" href="/index.css"/></head><body><div class="fonts-loader"><div>0</div><div style="font-style:italic">1</div><div style="font-weight:bold">2</div><div style="font-weight:bold;font-style:italic">3</div></div><header class="main-nav"><nav><ul class="nav-list"><li><h1><a href="/">Blog</a></h1></li><li><a href="/archive">Archive</a></li><li><a href="/about">About</a></li></ul></nav><button class="lamp"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="35" fill="none" stroke-width="10"></circle><path d="M 50 70 A 20 20 0 0 1 50 30"></path><path d="M 50 70 A 20 20 0 0 0 50 30"></path></svg></button><script>
+document.querySelector('.lamp').addEventListener('click', toggleColorScheme)
+
+const darkModeMediaQuery = matchMedia('(prefers-color-scheme: dark)')
+darkModeMediaQuery.addListener(toggleColorScheme)
+
+const documentClasses = document.documentElement.classList
+documentClasses.add(getColorScheme())
+
+function getColorScheme() {
+   const savedColorScheme = localStorage.getItem('color-scheme')
+
+   if (savedColorScheme) {
+      return savedColorScheme === 'dark' ? 'dark' : 'light'
+   }
+
+   return darkModeMediaQuery.matches ? 'dark' : 'light'
+}
+
+function toggleColorScheme() {
+   const colorScheme = getColorScheme()
+   documentClasses.remove(colorScheme)
+
+   const nextColorScheme = colorScheme === 'dark' ? 'light' : 'dark'
+   documentClasses.add(nextColorScheme)
+   localStorage.setItem('color-scheme', nextColorScheme)
+}
+</script></header><h1 id="animating-dots--dashes" class="post-heading"><a href="#animating-dots--dashes">Animating Dots &amp; Dashes</a></h1><aside class="contents">Contents<nav><ul><li><a href="#animating-dots--dashes" class="current-section">Animating Dots &amp; Dashes</a><ul><li><a href="#static-borders">
          Static borders
       </a></li><li><a href="#background--animations">
          Background &amp; animations
       </a></li><li><a href="#svg-is-better">
          SVG is better
-      </a></li></ul></li></ul></nav><script>
+      </a></li></ul></li></ul></nav></aside><script>
 const topThreshold = 20
 
 const initialTop = 270 // refer index.css for .contents top offset
@@ -72,7 +99,7 @@ function resetSidebar() {
       $currentSection.classList.remove('current-section')
    })
 }
-</script></aside><article><p>Using dashed-dotted-lines to create <em>sweet and simple</em> animations.</p>
+</script><article><p>Using dashed-dotted-lines to create <em>sweet and simple</em> animations.</p>
 
       <h2 id="static-borders" class="post-heading">
          <a href="#static-borders">Static borders</a>

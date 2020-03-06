@@ -1,10 +1,37 @@
-<!DOCTYPE html><html lang="en-US"><head><meta charSet="UTF-8"/><link rel="stylesheet" href="/index.css"/><title>react-router modals the way Twitter &amp; Pinterest do it</title></head><body><div class="fonts-loader"><div>0</div><div style="font-style:italic">1</div><div style="font-weight:bold">2</div><div style="font-weight:bold;font-style:italic">3</div></div><header class="main-nav"><nav><ul class="nav-list"><li><h1><a href="/">Blog</a></h1></li><li><a href="/archive">Archive</a></li><li><a href="/about">About</a></li></ul></nav></header><h1 id="react-router-modals-the-way-twitter--pinterest-do-it" class="post-heading"><a href="#react-router-modals-the-way-twitter--pinterest-do-it">react-router modals the way Twitter &amp; Pinterest do it</a></h1><aside class="contents">Contents<nav><ul><li><a href="#react-router-modals-the-way-twitter--pinterest-do-it" class="current-section">react-router modals the way Twitter &amp; Pinterest do it</a><ul><li><a href="#twitter">
+<!DOCTYPE html><html lang="en-US"><head><meta charSet="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1"/><title>react-router modals the way Twitter &amp; Pinterest do it</title><link rel="stylesheet" href="/index.css"/></head><body><div class="fonts-loader"><div>0</div><div style="font-style:italic">1</div><div style="font-weight:bold">2</div><div style="font-weight:bold;font-style:italic">3</div></div><header class="main-nav"><nav><ul class="nav-list"><li><h1><a href="/">Blog</a></h1></li><li><a href="/archive">Archive</a></li><li><a href="/about">About</a></li></ul></nav><button class="lamp"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="35" fill="none" stroke-width="10"></circle><path d="M 50 70 A 20 20 0 0 1 50 30"></path><path d="M 50 70 A 20 20 0 0 0 50 30"></path></svg></button><script>
+document.querySelector('.lamp').addEventListener('click', toggleColorScheme)
+
+const darkModeMediaQuery = matchMedia('(prefers-color-scheme: dark)')
+darkModeMediaQuery.addListener(toggleColorScheme)
+
+const documentClasses = document.documentElement.classList
+documentClasses.add(getColorScheme())
+
+function getColorScheme() {
+   const savedColorScheme = localStorage.getItem('color-scheme')
+
+   if (savedColorScheme) {
+      return savedColorScheme === 'dark' ? 'dark' : 'light'
+   }
+
+   return darkModeMediaQuery.matches ? 'dark' : 'light'
+}
+
+function toggleColorScheme() {
+   const colorScheme = getColorScheme()
+   documentClasses.remove(colorScheme)
+
+   const nextColorScheme = colorScheme === 'dark' ? 'light' : 'dark'
+   documentClasses.add(nextColorScheme)
+   localStorage.setItem('color-scheme', nextColorScheme)
+}
+</script></header><h1 id="react-router-modals-the-way-twitter--pinterest-do-it" class="post-heading"><a href="#react-router-modals-the-way-twitter--pinterest-do-it">react-router modals the way Twitter &amp; Pinterest do it</a></h1><aside class="contents">Contents<nav><ul><li><a href="#react-router-modals-the-way-twitter--pinterest-do-it" class="current-section">react-router modals the way Twitter &amp; Pinterest do it</a><ul><li><a href="#twitter">
          Twitter
       </a><ul><li><a href="#pinterest">
          Pinterest
       </a></li></ul></li><li><a href="#the-difference">
          The difference
-      </a></li></ul></li></ul></nav><script>
+      </a></li></ul></li></ul></nav></aside><script>
 const topThreshold = 20
 
 const initialTop = 270 // refer index.css for .contents top offset
@@ -72,7 +99,7 @@ function resetSidebar() {
       $currentSection.classList.remove('current-section')
    })
 }
-</script></aside><article><p>Twitter and Pinterest are two websites that use modals heavily. I&#39;d go as far as to say that they use modals as a central components of their design, and not just some auxiliary tools.</p>
+</script><article><p>Twitter and Pinterest are two websites that use modals heavily. I&#39;d go as far as to say that they use modals as a central components of their design, and not just some auxiliary tools.</p>
 <blockquote>
 <p><strong>Update</strong>
 Since the time of posting this article, both Twitter and Pinterest have ditched the &quot;show modal or load container&quot; approach and now load fully-featured screens for each interaction. I have copied the original behavior in a separate <a href="https://github.com/zhirzh/react-router-twitter-pinterest-style">repo</a>. You can try it out <a href="https://zhirzh.github.io/react-router-twitter-pinterest-style">here</a>.</p>

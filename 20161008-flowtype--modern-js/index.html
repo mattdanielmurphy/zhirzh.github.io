@@ -1,4 +1,31 @@
-<!DOCTYPE html><html lang="en-US"><head><meta charSet="UTF-8"/><link rel="stylesheet" href="/index.css"/><title>Flowtype &amp; Modern JS</title></head><body><div class="fonts-loader"><div>0</div><div style="font-style:italic">1</div><div style="font-weight:bold">2</div><div style="font-weight:bold;font-style:italic">3</div></div><header class="main-nav"><nav><ul class="nav-list"><li><h1><a href="/">Blog</a></h1></li><li><a href="/archive">Archive</a></li><li><a href="/about">About</a></li></ul></nav></header><h1 id="flowtype--modern-js" class="post-heading"><a href="#flowtype--modern-js">Flowtype &amp; Modern JS</a></h1><aside class="contents">Contents<nav><ul><li><a href="#flowtype--modern-js" class="current-section">Flowtype &amp; Modern JS</a><ul><li><a href="#flow">
+<!DOCTYPE html><html lang="en-US"><head><meta charSet="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1"/><title>Flowtype &amp; Modern JS</title><link rel="stylesheet" href="/index.css"/></head><body><div class="fonts-loader"><div>0</div><div style="font-style:italic">1</div><div style="font-weight:bold">2</div><div style="font-weight:bold;font-style:italic">3</div></div><header class="main-nav"><nav><ul class="nav-list"><li><h1><a href="/">Blog</a></h1></li><li><a href="/archive">Archive</a></li><li><a href="/about">About</a></li></ul></nav><button class="lamp"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="35" fill="none" stroke-width="10"></circle><path d="M 50 70 A 20 20 0 0 1 50 30"></path><path d="M 50 70 A 20 20 0 0 0 50 30"></path></svg></button><script>
+document.querySelector('.lamp').addEventListener('click', toggleColorScheme)
+
+const darkModeMediaQuery = matchMedia('(prefers-color-scheme: dark)')
+darkModeMediaQuery.addListener(toggleColorScheme)
+
+const documentClasses = document.documentElement.classList
+documentClasses.add(getColorScheme())
+
+function getColorScheme() {
+   const savedColorScheme = localStorage.getItem('color-scheme')
+
+   if (savedColorScheme) {
+      return savedColorScheme === 'dark' ? 'dark' : 'light'
+   }
+
+   return darkModeMediaQuery.matches ? 'dark' : 'light'
+}
+
+function toggleColorScheme() {
+   const colorScheme = getColorScheme()
+   documentClasses.remove(colorScheme)
+
+   const nextColorScheme = colorScheme === 'dark' ? 'light' : 'dark'
+   documentClasses.add(nextColorScheme)
+   localStorage.setItem('color-scheme', nextColorScheme)
+}
+</script></header><h1 id="flowtype--modern-js" class="post-heading"><a href="#flowtype--modern-js">Flowtype &amp; Modern JS</a></h1><aside class="contents">Contents<nav><ul><li><a href="#flowtype--modern-js" class="current-section">Flowtype &amp; Modern JS</a><ul><li><a href="#flow">
          Flow
       </a></li><li><a href="#modern-js">
          Modern JS
@@ -12,7 +39,7 @@
          3. Create .flowconfig
       </a></li><li><a href="#the-end-2">
          The End
-      </a></li></ul></li></ul></nav><script>
+      </a></li></ul></li></ul></nav></aside><script>
 const topThreshold = 20
 
 const initialTop = 270 // refer index.css for .contents top offset
@@ -80,7 +107,7 @@ function resetSidebar() {
       $currentSection.classList.remove('current-section')
    })
 }
-</script></aside><article><p>When people think about type-safe languages, JavaScript is not a name that comes to mind. At least not in a good way. But all that is going away.</p>
+</script><article><p>When people think about type-safe languages, JavaScript is not a name that comes to mind. At least not in a good way. But all that is going away.</p>
 
    <figure>
       <pre class="hljs"><code><span class="hljs-comment">// [number + string] + string === string</span>

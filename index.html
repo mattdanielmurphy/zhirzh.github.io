@@ -1,4 +1,31 @@
-<!DOCTYPE html><html lang="en-US"><head><meta charSet="UTF-8"/><link rel="stylesheet" href="/index.css"/><title>Blog</title></head><body><div class="fonts-loader"><div>0</div><div style="font-style:italic">1</div><div style="font-weight:bold">2</div><div style="font-weight:bold;font-style:italic">3</div></div><header class="main-nav"><nav><ul class="nav-list"><li><h1><a href="/">Blog</a></h1></li><li><a href="/archive">Archive</a></li><li><a href="/about">About</a></li></ul></nav></header><h2 class="post-heading"><a href="/20171206-prototype-tree">Prototype Tree</a></h2><article><p>Anyone who has worked with JS long enough knows something or the other about delegation, prototype chains, <a href="http://2ality.com/2012/10/dunder.html">dunder proto</a> and other similar things.
+<!DOCTYPE html><html lang="en-US"><head><meta charSet="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1"/><title>Blog</title><link rel="stylesheet" href="/index.css"/></head><body><div class="fonts-loader"><div>0</div><div style="font-style:italic">1</div><div style="font-weight:bold">2</div><div style="font-weight:bold;font-style:italic">3</div></div><header class="main-nav"><nav><ul class="nav-list"><li><h1><a href="/">Blog</a></h1></li><li><a href="/archive">Archive</a></li><li><a href="/about">About</a></li></ul></nav><button class="lamp"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="35" fill="none" stroke-width="10"></circle><path d="M 50 70 A 20 20 0 0 1 50 30"></path><path d="M 50 70 A 20 20 0 0 0 50 30"></path></svg></button><script>
+document.querySelector('.lamp').addEventListener('click', toggleColorScheme)
+
+const darkModeMediaQuery = matchMedia('(prefers-color-scheme: dark)')
+darkModeMediaQuery.addListener(toggleColorScheme)
+
+const documentClasses = document.documentElement.classList
+documentClasses.add(getColorScheme())
+
+function getColorScheme() {
+   const savedColorScheme = localStorage.getItem('color-scheme')
+
+   if (savedColorScheme) {
+      return savedColorScheme === 'dark' ? 'dark' : 'light'
+   }
+
+   return darkModeMediaQuery.matches ? 'dark' : 'light'
+}
+
+function toggleColorScheme() {
+   const colorScheme = getColorScheme()
+   documentClasses.remove(colorScheme)
+
+   const nextColorScheme = colorScheme === 'dark' ? 'light' : 'dark'
+   documentClasses.add(nextColorScheme)
+   localStorage.setItem('color-scheme', nextColorScheme)
+}
+</script></header><h2 class="post-heading"><a href="/20171206-prototype-tree">Prototype Tree</a></h2><article><p>Anyone who has worked with JS long enough knows something or the other about delegation, prototype chains, <a href="http://2ality.com/2012/10/dunder.html">dunder proto</a> and other similar things.
 There are times when I wonder how complex and deep this chaining can be.
 This past week, however, my curiosity got the best of me and I just had to find the answer for myself.</p></article><h2 class="post-heading"><a href="/20171130-cra-apps-with-ssr">CRA apps with SSR</a></h2><article><p>This is a multi-post series about how to server-side-render react apps that were built using create-react-app. You can read more about how and why I came up with this below.</p></article><h2 class="post-heading"><a href="/20170902-write-a-stream-ripper-with-mediarecorder/">Write a stream ripper with MediaRecorder</a></h2><article><p>The new <a href="https://developer.mozilla.org/docs/Web/API/MediaRecorder"><code>MediaRecorder</code></a> WebAPI makes media recording super easy.
 It allows storing chunks of data from a <a href="https://developer.mozilla.org/docs/Web/API/MediaStream">media stream</a> as blobs, which can later be concatenated and saved as a single file.

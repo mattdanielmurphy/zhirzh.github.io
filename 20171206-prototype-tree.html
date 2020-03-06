@@ -1,8 +1,35 @@
-<!DOCTYPE html><html lang="en-US"><head><meta charSet="UTF-8"/><link rel="stylesheet" href="/index.css"/><title>Prototype Tree</title></head><body><div class="fonts-loader"><div>0</div><div style="font-style:italic">1</div><div style="font-weight:bold">2</div><div style="font-weight:bold;font-style:italic">3</div></div><header class="main-nav"><nav><ul class="nav-list"><li><h1><a href="/">Blog</a></h1></li><li><a href="/archive">Archive</a></li><li><a href="/about">About</a></li></ul></nav></header><h1 id="prototype-tree" class="post-heading"><a href="#prototype-tree">Prototype Tree</a></h1><aside class="contents">Contents<nav><ul><li><a href="#prototype-tree" class="current-section">Prototype Tree</a><ul><li><a href="#nodejs">
+<!DOCTYPE html><html lang="en-US"><head><meta charSet="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1"/><title>Prototype Tree</title><link rel="stylesheet" href="/index.css"/></head><body><div class="fonts-loader"><div>0</div><div style="font-style:italic">1</div><div style="font-weight:bold">2</div><div style="font-weight:bold;font-style:italic">3</div></div><header class="main-nav"><nav><ul class="nav-list"><li><h1><a href="/">Blog</a></h1></li><li><a href="/archive">Archive</a></li><li><a href="/about">About</a></li></ul></nav><button class="lamp"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="35" fill="none" stroke-width="10"></circle><path d="M 50 70 A 20 20 0 0 1 50 30"></path><path d="M 50 70 A 20 20 0 0 0 50 30"></path></svg></button><script>
+document.querySelector('.lamp').addEventListener('click', toggleColorScheme)
+
+const darkModeMediaQuery = matchMedia('(prefers-color-scheme: dark)')
+darkModeMediaQuery.addListener(toggleColorScheme)
+
+const documentClasses = document.documentElement.classList
+documentClasses.add(getColorScheme())
+
+function getColorScheme() {
+   const savedColorScheme = localStorage.getItem('color-scheme')
+
+   if (savedColorScheme) {
+      return savedColorScheme === 'dark' ? 'dark' : 'light'
+   }
+
+   return darkModeMediaQuery.matches ? 'dark' : 'light'
+}
+
+function toggleColorScheme() {
+   const colorScheme = getColorScheme()
+   documentClasses.remove(colorScheme)
+
+   const nextColorScheme = colorScheme === 'dark' ? 'light' : 'dark'
+   documentClasses.add(nextColorScheme)
+   localStorage.setItem('color-scheme', nextColorScheme)
+}
+</script></header><h1 id="prototype-tree" class="post-heading"><a href="#prototype-tree">Prototype Tree</a></h1><aside class="contents">Contents<nav><ul><li><a href="#prototype-tree" class="current-section">Prototype Tree</a><ul><li><a href="#nodejs">
          NodeJS
       </a></li><li><a href="#the-end-4">
          The End
-      </a></li></ul></li></ul></nav><script>
+      </a></li></ul></li></ul></nav></aside><script>
 const topThreshold = 20
 
 const initialTop = 270 // refer index.css for .contents top offset
@@ -70,7 +97,7 @@ function resetSidebar() {
       $currentSection.classList.remove('current-section')
    })
 }
-</script></aside><article><p>Anyone who has worked with JS long enough knows something or the other about delegation, prototype chains, <a href="http://2ality.com/2012/10/dunder.html">dunder proto</a> and other similar things.
+</script><article><p>Anyone who has worked with JS long enough knows something or the other about delegation, prototype chains, <a href="http://2ality.com/2012/10/dunder.html">dunder proto</a> and other similar things.
 There are times when I wonder how complex and deep this chaining can be.
 This past week, however, my curiosity got the best of me and I just had to find the answer for myself.</p>
 <p>I wrote a script that scans the global namespace and generates an <em>inheritance</em> tree (prototype tree, actually).</p>
