@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en-US"><head><meta charSet="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1"/><title>Timing Controls 1 - Debounce</title><link rel="stylesheet" href="/index.css"/></head><body><div class="fonts-loader"><div>0</div><div style="font-style:italic">1</div><div style="font-weight:bold">2</div><div style="font-weight:bold;font-style:italic">3</div></div><header class="main-nav"><nav><ul class="nav-list"><li><h1><a href="/">Blog</a></h1></li><li><a href="/archive">Archive</a></li><li><a href="/about">About</a></li></ul></nav><button class="lamp"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="35" fill="none" stroke-width="10"></circle><path d="M 50 70 A 20 20 0 0 1 50 30"></path><path d="M 50 70 A 20 20 0 0 0 50 30"></path></svg></button><script>
+<!DOCTYPE html><html lang="en-US"><head><meta charSet="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1"/><title>Timing Controls 1 - Debounce</title><link rel="stylesheet" href="/index.css"/><script src="/sw.js"></script></head><body><div class="fonts-loader"><div>0</div><div style="font-style:italic">1</div><div style="font-weight:bold">2</div><div style="font-weight:bold;font-style:italic">3</div></div><header class="main-nav"><nav><ul class="nav-list"><li><h1><a href="/">Blog</a></h1></li><li><a href="/archive">Archive</a></li><li><a href="/about">About</a></li></ul></nav><button class="lamp"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="35" fill="none" stroke-width="10"></circle><path d="M 50 70 A 20 20 0 0 1 50 30"></path><path d="M 50 70 A 20 20 0 0 0 50 30"></path></svg></button><script>
 document.querySelector('.lamp').addEventListener('click', toggleColorScheme)
 
 const darkModeMediaQuery = matchMedia('(prefers-color-scheme: dark)')
@@ -25,7 +25,7 @@ function toggleColorScheme() {
    documentClasses.add(nextColorScheme)
    localStorage.setItem('color-scheme', nextColorScheme)
 }
-</script></header><h1 id="timing-controls-1---debounce" class="post-heading"><a href="#timing-controls-1---debounce">Timing Controls 1 - Debounce</a></h1><aside class="contents">Contents<nav><ul><li><a href="#timing-controls-1---debounce" class="current-section">Timing Controls 1 - Debounce</a><ul><li><a href="#js-debounce-function">
+</script></header><h1 id="timing-controls-1---debounce" class="post-heading"><a href="#timing-controls-1---debounce">Timing Controls 1 - Debounce</a></h1><aside class="contents">Contents<nav><ul><li><a href="#timing-controls-1---debounce">Timing Controls 1 - Debounce</a><ul><li><a href="#js-debounce-function">
          JS debounce function
       </a><ul><li><a href="#problem-1-passing-arguments">
          Problem #1: Passing arguments
@@ -49,31 +49,22 @@ const finalTop = 100
 
 let prevTop = 0
 
-window.addEventListener('scroll', main, {
+window.addEventListener('scroll', contentsMain, {
    passive: true,
 })
 
-window.addEventListener('resize', main, {
+window.addEventListener('resize', contentsMain, {
    passive: true,
 })
 
-function main() {
+setTimeout(contentsMain, 1000)
+
+function contentsMain() {
    if (window.innerWidth >= 1300) {
       moveSidebar()
       highlightCurrentSection()
    } else {
       resetSidebar()
-   }
-}
-
-function moveSidebar() {
-   const top = Math.max(finalTop, initialTop - window.scrollY)
-
-   if (prevTop !== top) {
-      const $contents = document.querySelector('.contents')
-      $contents.style.top = top + 'px'
-
-      prevTop = top
    }
 }
 
@@ -98,6 +89,19 @@ function highlightCurrentSection() {
    })
 
    $targetLink.classList.add('current-section')
+}
+
+function moveSidebar() {
+   const top = Math.max(finalTop, initialTop - window.scrollY)
+
+   if (prevTop === top) {
+      return
+   }
+
+   prevTop = top
+
+   const $contents = document.querySelector('.contents')
+   $contents.style.top = top + 'px'
 }
 
 function resetSidebar() {
